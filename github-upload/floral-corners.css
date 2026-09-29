@@ -1,0 +1,10 @@
+.floral-corner{position:absolute;top:0;bottom:auto;width:clamp(150px,20vw,280px);height:auto;z-index:3;pointer-events:none;line-height:0}
+.floral-corner-left{left:0}.floral-corner-right{right:0;transform:scaleX(-1)}
+.botanical-corner-image{display:block;width:100%;height:auto;filter:drop-shadow(0 3px 7px #79566620)}
+.floral-corner svg{position:absolute;top:0;left:0;width:100%;height:auto;display:block;overflow:visible}
+.corner-butterfly{animation:corner-float 5s ease-in-out infinite;transform-origin:center;transform-box:fill-box}.corner-butterfly-small{animation-delay:-2s}.floral-corner-right .corner-butterfly{animation-delay:-3s}
+.corner-sparkles{animation:corner-shimmer 3s ease-in-out infinite;filter:drop-shadow(0 0 5px #fff0c7)}
+@keyframes corner-float{50%{transform:translateY(-9px) rotate(5deg)}}
+@keyframes corner-shimmer{50%{opacity:.45}}
+@media(max-width:600px){.floral-corner{width:29vw;min-width:100px}}
+@media(prefers-reduced-motion:reduce){.corner-butterfly,.corner-sparkles{animation:none}}

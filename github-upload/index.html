@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="Welcome to Kayiu’s portfolio.">
+  <title>Kayiu — Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+    * { box-sizing: border-box; }
+    html { background: #090909; color: #f5f5f3; }
+    body { margin: 0; font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; }
+    .portrait-story { height: 165svh; position: relative; }
+    .hero { position: sticky; top: 0; height: 100svh; height: 100dvh; overflow: hidden; background: #090909; }
+    .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .welcome { position: absolute; z-index: 2; left: 50%; bottom: 5%; width: min(690px, 76vw); margin: 0; transform: translateX(-50%); pointer-events: none; }
+    .welcome-art { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 0 7px #ffd8ed90) drop-shadow(0 0 20px #facbe34d); transform: rotate(-3deg); }
+    .motion-ready .welcome-art { opacity: 0; transform: translateY(85px) scale(.6) rotate(-12deg); }
+    .motion-ready .is-visible .welcome-art { animation: welcome-pop 1100ms cubic-bezier(.16,1,.3,1) both; }
+    @keyframes welcome-pop {
+      0% { opacity: 0; transform: translateY(85px) scale(.6) rotate(-12deg); }
+      65% { opacity: 1; transform: translateY(-9px) scale(1.055) rotate(-3deg); }
+      100% { opacity: 1; transform: translateY(0) scale(1) rotate(-3deg); }
+    }
+    @media (max-width: 520px) { .welcome { width: 90vw; bottom: 10%; } }
+    @media (prefers-reduced-motion: reduce) {
+      .motion-ready .welcome-art { opacity: 1; transform: rotate(-3deg); }
+      .motion-ready .is-visible .welcome-art { animation: none; }
+    }
+
+    .fairy-button { position: absolute; z-index: 5; top: 18px; left: 20px; width: clamp(82px, 10vw, 140px); padding: 0; border: 0; background: none; cursor: pointer; transition: transform .25s; }
+    .fairy-button:hover { transform: translateY(-5px) rotate(-4deg); }
+    .fairy-button:focus-visible { outline: 2px solid #ffe9bd; outline-offset: 5px; border-radius: 24px; }
+    .fairy-button img { display: block; width: 100%; border-radius: 45%; filter: drop-shadow(0 4px 12px #ffdbea70); }
+    .fairy-label { display: inline-block; margin-top: 5px; padding: 5px 12px; border: 1px solid #f6dfb58c; border-radius: 20px; color: #fff4da; background: #30212bd9; font: 11px Georgia, serif; letter-spacing: 1px; }
+    .education-dialog { width: min(740px, 94vw); max-height: 94dvh; padding: 40px 30px; border: 0; background: transparent; color: #50394a; overflow: auto; }
+    .education-dialog::backdrop { background: #15101b85; backdrop-filter: blur(6px); }
+    .scroll-sheet { position: relative; margin: 12px 0; padding: 56px 38px 44px; text-align: center; border: 1px solid #c8a46b; background: radial-gradient(ellipse at center, #fffcef, #f4e6c9); box-shadow: 0 15px 50px #0004, inset 0 0 40px #cca96330; }
+    .education-dialog[open] .scroll-sheet { animation: unroll 850ms cubic-bezier(.16,1,.3,1) both; }
+    .scroll-sheet::before, .scroll-sheet::after { content: ''; position: absolute; height: 24px; left: -16px; right: -16px; border: 1px solid #bb965e; border-radius: 14px; background: linear-gradient(#d7bb84, #fff0ce 40%, #edd4a0 65%, #bc955d); box-shadow: 0 4px 8px #60442530; }
+    .scroll-sheet::before { top: -12px; } .scroll-sheet::after { bottom: -12px; }
+    .certificate-border { position: absolute; inset: 20px; border: 1px solid #c8a46b; outline: 1px solid #c8a46b55; outline-offset: 5px; pointer-events: none; }
+    .education-close { position: absolute; z-index: 2; top: 23px; right: 25px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #fff8e8; color: #624353; font-size: 24px; cursor: pointer; }
+    .education-close:focus-visible { outline: 2px solid #624353; }
+    .education-kicker { margin: 0 0 18px; text-transform: uppercase; font-size: 10px; letter-spacing: 4px; color: #8b7251; }
+    .education-title { margin: 0; font: italic 40px Georgia, serif; }
+    .education-school { margin: 26px 0 12px; font: 600 28px Georgia, serif; letter-spacing: 5px; }
+    .education-program { margin: 0 auto; max-width: 440px; font: 24px/1.4 Georgia, serif; }
+    .education-detail { max-width: 400px; margin: 20px auto 0; font-size: 13px; line-height: 1.8; color: #746255; }
+    .education-seal { display: grid; place-items: center; margin: 25px auto 0; width: 56px; height: 56px; border-radius: 50%; border: 3px double #b4965c; color: #b4965c; font-size: 28px; }
+    .sparkles { position: absolute; inset: 0; pointer-events: none; }
+    .sparkles span { position: absolute; color: #fff2ba; text-shadow: 0 0 8px #fff, 0 0 20px #ffcfed; font-size: 30px; animation: twinkle 1.8s ease-in-out infinite alternate; }
+    .sparkles span:nth-child(1) { left: 0; top: 16%; } .sparkles span:nth-child(2) { right: 1%; top: 25%; animation-delay: -.6s; }
+    .sparkles span:nth-child(3) { left: 9%; bottom: 0; animation-delay: -.9s; } .sparkles span:nth-child(4) { right: 8%; bottom: 3%; animation-delay: -.3s; }
+    .sparkles span:nth-child(5) { left: 24%; top: 0; font-size: 18px; animation-delay: -1.2s; } .sparkles span:nth-child(6) { right: 22%; top: 1%; font-size: 20px; animation-delay: -.7s; }
+    @keyframes unroll { from { clip-path: inset(0 0 98% 0); transform: translateY(-24px); opacity: .3; } to { clip-path: inset(-25px -25px -25px -25px); transform: none; opacity: 1; } }
+    @keyframes twinkle { from { opacity: .25; transform: scale(.55) rotate(-12deg); } to { opacity: 1; transform: scale(1.15) rotate(12deg); } }
+    @media (max-width: 520px) { .fairy-button { top: 12px; left: 12px; } .education-dialog { padding: 30px 20px; } .scroll-sheet { padding: 54px 24px 35px; } .education-title { font-size: 32px; } .education-program { font-size: 21px; } }
+    @media (prefers-reduced-motion: reduce) { .education-dialog[open] .scroll-sheet, .sparkles span { animation: none; } .fairy-button { transition: none; } }
+
+    /* Quiet left-hand drawer; the portrait stays visible alongside it. */
+    .fairy-button { width: clamp(140px, 14vw, 200px); opacity: 1; }
+    .fairy-button:hover, .fairy-button:focus-visible { opacity: 1; }
+    .fairy-button img { max-height: 28dvh; object-fit: contain; border-radius: 0; filter: drop-shadow(0 0 9px #fff2db40); }
+    .fairy-label { background: #f7efed25; border-color: #ffffff40; font-size: 10px; }
+    .education-dialog { position: fixed; inset: var(--education-top, 240px) auto auto 20px; margin: 0; width: 33.333vw; max-width: calc(100vw - 40px); height: auto; max-height: calc(100dvh - var(--education-top, 240px) - 18px); padding: 18px 20px; border: 1px solid #fff5e970; border-radius: 10px 10px 22px 22px; background: linear-gradient(135deg, #fcf7ee, #efe4e1); backdrop-filter: none; box-shadow: 0 12px 35px #29203218; transform-origin: top center; overflow-y: auto; overflow-x: hidden; }
+    .education-dialog::backdrop { background: transparent; backdrop-filter: none; }
+    .education-dialog[open] { animation: drawer-in 620ms cubic-bezier(.22,1,.36,1) both; }
+    .education-dialog[open].is-closing { animation: drawer-out 280ms ease-in both; }
+    .scroll-sheet { min-height: 0; display: flex; flex-direction: column; justify-content: center; margin: 12px 0; padding: 45px 22px 28px; background: transparent; border: 0; box-shadow: none; }
+    .education-dialog[open] .scroll-sheet { animation: none; }
+    .scroll-sheet::before, .scroll-sheet::after { left: 0; right: 0; height: 12px; border-color: #d8c6a950; background: linear-gradient(#e9dfcd80, #fff9ee, #e9dfcd80); box-shadow: none; }
+    .certificate-border { inset: 22px 8px; border-color: #cab9a66b; outline-color: #cab9a62b; }
+    .education-close { top: 24px; right: 13px; background: transparent; color: #887a7e; }
+    .education-title { font-size: clamp(26px, 3vw, 40px); color: #796574; }
+    .education-school { font-size: 24px; color: #796574; }
+    .education-program { font-size: clamp(18px, 1.65vw, 24px); }
+    .education-kicker { font-size: 9px; letter-spacing: 2px; }
+    .education-detail { font-size: 12px; }
+    .education-seal { opacity: .6; }
+    .sparkles { position: fixed; opacity: .5; }
+    .sparkles span { font-size: 19px; text-shadow: 0 0 6px #fff, 0 0 12px #ffdbea; }
+    @keyframes drawer-in { from { clip-path: inset(0 0 100% 0); transform: translateY(-20px); opacity: .3; } to { clip-path: inset(0); transform: translateY(0); opacity: 1; } }
+    @keyframes drawer-out { from { clip-path: inset(0); transform: translateY(0); opacity: 1; } to { clip-path: inset(0 0 100% 0); transform: translateY(-20px); opacity: 0; } }
+    @media (max-width: 800px) { .education-dialog { width: 44vw; padding: 20px 14px; } .scroll-sheet { padding: 60px 18px; } }
+    @media (max-width: 520px) { .education-dialog { width: calc(100vw - 24px); max-width: none; left: 12px; } }
+    @media (prefers-reduced-motion: reduce) { .education-dialog[open], .education-dialog[open].is-closing { animation: none; } }
+
+    .fairy-button { animation: none; transition: none; }
+    .fairy-button:hover { transform: none; }
+    .fairy-button:hover, .fairy-button:focus-visible, .fairy-button.is-near,
+    .fairy-button[aria-expanded="true"] { animation-play-state: paused; }
+    .fairy-button::before, .fairy-button::after { content: '✦'; position: absolute; pointer-events: none; color: #fff2cf; text-shadow: 0 0 8px #fff5e5, 0 0 15px #f7c9e5; animation: fairy-stardust 3.8s ease-in-out infinite; }
+    .fairy-button::before { left: 5%; top: 42%; font-size: 16px; }
+    .fairy-button::after { right: 2%; top: 68%; font-size: 10px; animation-delay: -1.9s; }
+    @keyframes fairy-flight {
+      0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+      25% { transform: translate(22px, 12px) rotate(2deg); }
+      50% { transform: translate(40px, 3px) rotate(-1deg); }
+      75% { transform: translate(16px, 20px) rotate(2deg); }
+    }
+    @keyframes fairy-stardust {
+      0%, 100% { opacity: 0; transform: translateY(0) scale(.5); }
+      40% { opacity: .8; transform: translateY(-8px) scale(1); }
+      80% { opacity: 0; transform: translateY(-20px) scale(.4); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .fairy-button { animation: none; }
+      .fairy-button::before, .fairy-button::after { animation: none; opacity: .5; }
+    }
+
+    .clouds { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+    .cloud-bank { position: absolute; bottom: -2px; width: 27vw; height: 37vh; will-change: transform; }
+    .clouds::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 12vh; background: linear-gradient(to top, #fffaf4 0%, #fffaf4e6 20%, #fffaf477 48%, #fffaf400 100%); pointer-events: none; }
+    .cloud-bank svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .cloud-left { left: -1%; transform-origin: bottom left; animation: cloud-left-drift 14s ease-in-out infinite alternate; }
+    .cloud-right { right: -1%; transform-origin: bottom right; animation: cloud-right-drift 18s ease-in-out infinite alternate; animation-delay: -7s; }
+    .cloud-right svg { transform: scaleX(-1); }
+    @keyframes cloud-left-drift { from { transform: scaleY(.97); } to { transform: scaleY(1.04); } }
+    @keyframes cloud-right-drift { from { transform: scaleY(1.035); } to { transform: scaleY(.96); } }
+    @media (max-width: 520px) { .cloud-bank { width: 24vw; height: 27vh; } .cloud-left { left: -1%; } .cloud-right { right: -1%; } }
+    @media (prefers-reduced-motion: reduce) { .cloud-bank { animation: none; will-change: auto; } }
+
+html { background: #fffaf4; }
+.portrait-story { height: 155svh; }
+.hero::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to top,#fffaf4,#fffaf490 50%,transparent); opacity: var(--journey-fade,0); }
+.welcome { opacity: var(--title-opacity,1); }
+.about-world { position: relative; z-index: 2; min-height: 100svh; padding: 85px 8vw 40px; color: #796477; background: radial-gradient(ellipse at 80% 45%,#e7e9f9,transparent 60%),radial-gradient(ellipse at 10% 80%,#f9e4eb,transparent 55%),#fffaf4; }
+.about-world::before { content: ''; position:absolute; bottom:100%; left:0; right:0; height:15vh; background:linear-gradient(transparent,#fffaf4); }
+.chapter-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#ab8e9f; }
+.about-layout { max-width:1100px; margin:70px auto; display:grid; grid-template-columns:1.2fr 1fr; gap:10vw; align-items:center; }
+.about-hello { font:italic 29px Georgia,serif; color:#ad869c; }
+.about-world h2 { font:clamp(60px,7vw,100px) Georgia,serif; letter-spacing:-4px; margin:10px 0; }
+.about-line { font:26px/1.6 Georgia,serif; }.about-description { font-size:14px; line-height:1.9; max-width:380px; }
+.study-card { text-align:center; padding:65px 30px 40px; border:1px solid #e4d7de; outline:1px solid white; outline-offset:7px; border-radius:160px 160px 16px 16px; background:#fff9f5; transform:rotate(4deg); box-shadow:10px 22px 60px #9e88a01a; }.study-card h3 { font:28px/1.3 Georgia,serif; }.card-monogram { font:italic 90px Georgia,serif; color:#cbb7ce; }.card-tags { font-size:11px; }.back-sky { color:inherit; font-size:12px; }
+.more-fairy { left:auto; right:20px; animation:fairy-flight 10s ease-in-out infinite; }.more-fairy:hover,.more-fairy:focus-visible,.more-fairy[aria-expanded="true"] { animation-play-state:paused; }.more-fairy .fairy-label { white-space:nowrap; }
+.more-dialog { left:auto; right:20px; background:#f6f1fa; }
+.fairy-contact { margin:28px 0 12px; text-align:left; }
+.fairy-contact dt { margin-top:22px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#88728d; }
+.fairy-contact dd { margin:8px 0 0; }
+.fairy-contact a { color:#624b70; font-size:clamp(14px,2vw,18px); line-height:1.7; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:5px; }
+.fairy-contact a:hover { color:#a45c86; }
+.fairy-contact a:focus-visible { outline:2px solid #a45c86; outline-offset:5px; }
+@media(max-width:700px) { .about-layout { grid-template-columns:1fr; gap:55px; }.study-card { max-width:370px; }.more-fairy { left:auto; right:12px; }.more-dialog { left:auto; right:12px; } }
+@media(prefers-reduced-motion:reduce) { .more-fairy { animation:none; } }
+
+    .experience-world { min-height: 100svh; position: relative; overflow: hidden; padding: 80px max(7vw, 24px) 45px; background: radial-gradient(ellipse at 25% 60%, #ffe5de80, transparent 55%), #f7edf1; color: #705767; }
+    .experience-heading { text-align: center; margin: 42px 0 12px; font: italic clamp(40px, 5vw, 70px) Georgia, serif; }
+    .experience-subtitle { text-align: center; font-size: 12px; color: #a18494; letter-spacing: 1px; line-height: 1.8; }
+    .tasting-layout { max-width: 1150px; margin: 45px auto; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 55px; }
+    .cake-stage { position: relative; min-width: 0; }
+    .cake-art { width: 100%; display: block; overflow: visible; }
+    .cake-slice { cursor: pointer; transform-box: view-box; transition: transform 600ms cubic-bezier(.2,.8,.2,1), filter 500ms; outline: none; }
+    .cake-slice:hover .slice-top, .cake-slice:focus-visible .slice-top { stroke: #a47b91; stroke-width: 3; }
+    .cake-slice:focus-visible { filter: drop-shadow(0 0 5px #8062a1); }
+    .cake-slice.is-selected { transform: translate(var(--slice-x), var(--slice-y)); filter: drop-shadow(0 12px 9px #79556b40); }
+    .slice-top { stroke: #fff6ec; stroke-width: 2; stroke-linejoin: round; }
+    .cake-caption { font: 13px Georgia, serif; fill: #725a69; pointer-events: none; }
+    .cake-number { font: italic 32px Georgia, serif; fill: #886776; pointer-events: none; }
+    .cake-detail { fill: #fff9ef; opacity: .9; pointer-events: none; }
+    .cake-knife { pointer-events: none; position: absolute; z-index: 3; left: 50%; top: 46%; width: 35%; height: 70px; transform-origin: left center; opacity: 0; }
+    .cake-knife.is-cutting { animation: cake-cut 700ms ease-in-out both; }
+    @keyframes cake-cut { 0% { opacity: 0; transform: rotate(var(--cut-angle)) translateY(-48px); } 24% { opacity: 1; transform: rotate(var(--cut-angle)) translateY(-28px); } 58% { opacity: 1; transform: rotate(var(--cut-angle)) translateY(4px); } 80% { opacity: 1; transform: rotate(var(--cut-angle)) translateY(-10px); } 100% { opacity: 0; transform: rotate(var(--cut-angle)) translateY(-35px); } }
+    .taste-choices { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .taste-choice { padding: 9px 13px; border: 1px solid #ddc9d3; border-radius: 22px; background: #fff9f480; color: #927587; cursor: pointer; font: inherit; font-size: 11px; }
+    .taste-choice[aria-pressed="true"] { background: #816579; color: #fffaf6; border-color: #816579; }
+    .taste-choice:focus-visible { outline: 2px solid #816579; outline-offset: 4px; }
+    .experience-menu { position: relative; padding: 38px 32px; min-height: 370px; background: #fffaf2; border: 1px solid #dcc5cd; outline: 1px solid #fffaf2; outline-offset: 7px; border-radius: 110px 110px 8px 8px; box-shadow: 8px 15px 35px #95768713; text-align: center; }
+    .menu-eyebrow { margin: 15px 0 12px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #b497a7; }
+    .menu-title { font: italic 35px Georgia, serif; margin: 0 0 23px; }
+    .menu-divider { display: flex; align-items: center; gap: 14px; margin: 20px 0; color: #c1a38a; }
+    .menu-divider::before, .menu-divider::after { content: ''; height: 1px; flex: 1; background: #e5d6cb; }
+    .menu-company { font: 25px/1.25 Georgia, serif; margin: 0 0 12px; }
+    .menu-sector { color: #ab879b; font-size: 10px; letter-spacing: 1.2px; line-height: 1.8; text-transform: uppercase; }
+    .menu-description { color: #897482; font-size: 14px; line-height: 1.9; margin-top: 20px; }
+    .menu-body.is-revealing { animation: menu-reveal 500ms ease both; }
+    @keyframes menu-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @media(max-width: 750px) { .tasting-layout { grid-template-columns: 1fr; gap: 40px; } .cake-stage { max-width: 510px; margin: auto; width: 100%; } .experience-menu { max-width: 410px; width: 100%; margin: auto; } .experience-world { padding-top: 65px; } }
+    @media(prefers-reduced-motion: reduce) { .cake-slice { transition: none; } .cake-knife.is-cutting, .menu-body.is-revealing { animation: none; } }
+
+    .experience-world { padding-left: 3vw; padding-right: 3vw; }
+    .tasting-layout { position: relative; max-width: 1440px; margin: 30px auto 45px; display: block; }
+    .cake-stage { width: min(100%, 840px); max-width: none; margin: auto; }
+    .cake-slice image { pointer-events: none; }
+    .cake-slice { pointer-events: none; } .slice-hit { pointer-events: all; fill: transparent; }
+    .cake-server { opacity: 0; transition: opacity 180ms ease; pointer-events: none; }
+    .cake-slice.is-selected .cake-server { opacity: 1; }
+    .cake-slice.is-selected { filter: drop-shadow(0 18px 12px #493b454d); }
+    .cake-slice:hover:not(.is-selected) { filter: brightness(1.025); }
+    .cake-slice:focus-visible { filter: drop-shadow(0 0 7px #8062a1); }
+    .taste-choices { max-width: 760px; margin: 0 auto; gap: 10px; }
+    .experience-menu { position: absolute; z-index: 4; width: clamp(240px, 25vw, 320px); min-height: 0; padding: 27px 24px; border-radius: 60px 60px 8px 8px; box-shadow: 0 16px 40px #80647826; }
+    .experience-menu[hidden] { display: none; }
+    .experience-menu[data-position="top-right"] { top: 0; right: 0; }
+    .experience-menu[data-position="top-left"] { top: 0; left: 0; }
+    .experience-menu[data-position="bottom-right"] { bottom: 100px; right: 0; }
+    .experience-menu[data-position="bottom-left"] { bottom: 100px; left: 0; }
+    .experience-menu.is-revealing { animation: menu-reveal 450ms ease both; }
+    .menu-close { position: absolute; right: 18px; top: 15px; border: 0; background: none; font-size: 24px; color: #947989; cursor: pointer; }
+    .menu-close:focus-visible { outline: 2px solid #947989; }
+    .menu-company { font-size: 23px; }
+    .menu-title { margin-bottom: 12px; font-size: 29px; }
+    .menu-description { font-size: 13px; }
+    @media(max-width: 900px) { .experience-menu { position: relative; width: min(90%, 460px); max-width: none; margin: 35px auto 0; } .experience-menu[data-position] { top: auto; bottom: auto; left: auto; right: auto; } .cake-stage { max-width: 740px; } }
+    @media(prefers-reduced-motion: reduce) { .cake-server { transition: none; } .experience-menu.is-revealing { animation: none; } }
+
+    .experience-world { padding-top: 42px; padding-bottom: 32px; }
+    .experience-heading { margin: 20px 0 8px; font-size: clamp(32px, 4vw, 54px); }
+    .experience-subtitle { margin: 8px 0; }
+    .tasting-layout { margin: 15px auto 0; min-height: 510px; }
+    .cake-stage { width: min(72vw, 780px, 94vh); }
+    .slice-brand { pointer-events: none; }
+    .experience-menu { position: absolute; width: clamp(220px, 23vw, 300px); padding: 22px 20px; min-height: 0; max-height: min(480px, 65dvh); overflow-y: auto; }
+    .experience-menu[data-position="top-left"] { top: 8px; left: 0; right: auto; bottom: auto; }
+    .experience-menu[data-position="top-right"] { top: 8px; right: 0; left: auto; bottom: auto; }
+    .experience-menu[data-position="bottom-left"] { top: 130px; left: 0; right: auto; bottom: auto; }
+    .experience-menu[data-position="bottom-right"] { top: 130px; right: 0; left: auto; bottom: auto; }
+    .menu-eyebrow { margin-top: 10px; }.menu-title { font-size:25px; }.menu-description { line-height: 1.65; }.menu-divider { margin:12px 0; }
+    @media(max-width:900px) { .cake-stage { width:min(90vw,700px); }.experience-menu { margin:0; width:min(42vw,290px); }.menu-company { font-size:20px; } }
+    @media(max-width:600px) { .cake-stage { width:100%; }.tasting-layout { min-height:380px; }.taste-choice { padding:7px 9px; font-size:9px; }.experience-menu { position:fixed; top:50% !important; left:50% !important; right:auto !important; bottom:auto !important; transform:translate(-50%,-50%); width: min(86vw,340px); max-height:75dvh; z-index:10; }.experience-menu.is-revealing { animation:none; } }
+
+    .tasting-layout { width: min(94%, 1320px); margin: 24px auto 0; }
+    .cake-stage { width: min(68vw, 720px); max-width: none; margin: auto; }
+    @media(max-width:900px) { .cake-stage { width: min(86vw, 680px); } }
+    @media(max-width:600px) { .cake-stage { width: 100%; } }
+
+    .cake-volume { opacity: 0; transition: opacity 180ms ease; }
+    .cake-slice.is-selected[data-taste="school"] .cake-volume,
+    .cake-slice.is-selected[data-taste="a1"] .cake-volume { opacity: 1; }
+    @media(prefers-reduced-motion:reduce) { .cake-volume { transition:none; } }
+  </style>
+  <link rel="stylesheet" href="portfolio-board.css?v=skills-4">
+  <script src="skill-orbit.js?v=4" defer></script>
+  <script src="portfolio-board.js" defer></script>
+  <link rel="stylesheet" href="top-navigation.css">
+  <link rel="stylesheet" href="floral-corners.css?v=botanical">
+  <script src="floral-corners.js?v=botanical" defer></script>
+</head>
+<body>
+  <main><div class="portrait-story" id="home">
+    <section class="hero" aria-label="Interactive portrait of Kayiu">  <button class="fairy-button" type="button" aria-label="Open my education" aria-haspopup="dialog" aria-controls="education-dialog" aria-expanded="false">
+    <img src="graduation-fairy-transparent.png" alt="Graduation fairy">
+    <span class="fairy-label">Education</span>
+  </button>
+<button class="fairy-button more-fairy" type="button" aria-label="Open More About Me" aria-haspopup="dialog" aria-controls="more-dialog" aria-expanded="false"><img src="fangirl-fairy.png" alt="Fangirl fairy"><span class="fairy-label">Contact</span></button>
+      <nav class="top-navigation" aria-label="Portfolio sections"><span class="top-navigation-brand">Kayiu ✧</span><a href="#about">About Me </a><a href="#experience">Experience </a><a href="#portfolio">More</a></nav>
+      <video class="hero-video" muted playsinline preload="auto" aria-hidden="true" tabindex="-1">
+        <source src="hero-background-5258.mp4" type="video/mp4">
+      </video>
+      <div class="clouds" aria-hidden="true">
+        <div class="cloud-bank cloud-left">
+          <svg viewBox="0 0 460 440" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="cloud-back-left" x1="0" y1="0" x2=".4" y2="1"><stop stop-color="#fffafa"/><stop offset=".6" stop-color="#ede9f7"/><stop offset="1" stop-color="#d9eafa"/></linearGradient>
+              <linearGradient id="cloud-front-left" x1="0" y1="0" x2=".2" y2="1"><stop stop-color="#fffdf9"/><stop offset=".7" stop-color="#fff5f3"/><stop offset="1" stop-color="#eaeaf7"/></linearGradient>
+            </defs>
+            <path d="M-20 36 C13 20 43 42 40 78 C86 67 112 101 105 140 C150 126 176 164 169 202 C216 189 246 225 239 265 C284 251 316 290 309 325 C351 316 378 353 373 380 C408 376 439 405 460 444 H-20Z" fill="url(#cloud-back-left)"/>
+            <path d="M-20 139 C18 119 53 148 49 188 C93 172 129 204 119 246 C166 231 202 264 191 301 C235 287 273 319 265 351 C308 343 339 374 335 400 Q393 397 452 444 H-20Z" fill="url(#cloud-front-left)"/>
+            <path d="M8 321 Q32 305 52 325 Q72 342 94 337" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cloud-bank cloud-right">
+          <svg viewBox="0 0 460 440" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="cloud-back-right" x1="0" y1="0" x2=".4" y2="1"><stop stop-color="#fffafa"/><stop offset=".6" stop-color="#ede9f7"/><stop offset="1" stop-color="#d9eafa"/></linearGradient>
+              <linearGradient id="cloud-front-right" x1="0" y1="0" x2=".2" y2="1"><stop stop-color="#fffdf9"/><stop offset=".7" stop-color="#fff5f3"/><stop offset="1" stop-color="#eaeaf7"/></linearGradient>
+            </defs>
+            <path d="M-20 60 C20 33 55 60 49 100 C92 90 124 127 114 163 C154 145 190 181 179 220 C223 204 255 245 246 281 C286 270 321 302 315 334 C355 325 384 361 378 389 Q425 387 460 444 H-20Z" fill="url(#cloud-back-right)"/>
+            <path d="M-20 173 C21 149 59 173 53 212 C101 197 137 230 127 268 C174 251 207 287 197 321 C245 304 273 337 268 367 C307 357 343 390 337 412 Q399 407 452 444 H-20Z" fill="url(#cloud-front-right)"/>
+            <path d="M8 321 Q32 305 52 325 Q72 342 94 337" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <h1 class="welcome" aria-label="Welcome to my Portfolio">
+        <svg class="welcome-art" viewBox="0 0 760 280" role="img" aria-labelledby="art-title">
+          <title id="art-title">Welcome to my Portfolio</title>
+          <defs>
+            <linearGradient id="pearl" x1="0" y1="0" x2="0.2" y2="1">
+              <stop offset="0" stop-color="#fff8d9"/>
+              <stop offset=".3" stop-color="#d6edff"/>
+              <stop offset=".6" stop-color="#f2c8ef"/>
+              <stop offset="1" stop-color="#fff2ca"/>
+            </linearGradient>
+            <path id="welcome-curve" d="M 125,82 Q 380,26 635,82"/>
+          </defs>
+          <g fill="url(#pearl)" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke fill">
+            <text font-family="Baskerville, 'Palatino Linotype', Georgia, serif" font-size="40" font-style="italic" letter-spacing="2"><textPath href="#welcome-curve" startOffset="50%" text-anchor="middle">Welcome to my</textPath></text>
+            <text x="376" y="198" text-anchor="middle" font-family="Baskerville, 'Palatino Linotype', Georgia, serif" font-size="139" font-style="italic" font-weight="bold" letter-spacing="-7">Portfolio</text>
+          </g>
+          <!-- Flowing flourishes echo the curled terminals in the reference. -->
+          <g fill="none" stroke="url(#pearl)" stroke-linecap="round">
+            <path d="M140 187 C122 220 93 247 67 229 C42 211 66 184 81 200 C91 213 76 222 71 213" stroke-width="6"/>
+            <path d="M181 228 C304 203 469 255 595 226 C626 219 641 208 657 216 C681 229 704 252 723 232 C742 212 714 194 705 209 C701 217 710 223 715 216" stroke-width="7"/>
+            <path d="M132 95 C97 106 73 98 67 80 C60 55 90 48 97 66 C101 78 84 85 82 73" stroke-width="4"/>
+          </g>
+          <g fill="url(#pearl)">
+            <path d="M61 132 Q65 155 84 159 Q65 163 61 188 Q57 163 38 159 Q57 155 61 132Z"/>
+            <path d="M681 85 Q686 119 713 125 Q686 131 681 165 Q676 131 649 125 Q676 119 681 85Z"/>
+            <path d="M647 39 Q650 53 663 57 Q650 60 647 75 Q644 60 631 57 Q644 53 647 39Z"/>
+            <path d="M713 178 716 188 726 185 719 193 726 200 716 198 713 209 710 198 700 201 707 193 700 185 710 188Z"/>
+          </g>
+        </svg>
+      </h1>
+
+    </section>
+  </div>
+<section class="about-world" id="about" aria-labelledby="about-heading">
+ <p class="chapter-label">01 / A little about me</p>
+ <div class="about-layout">
+ <div><p class="about-hello">Hello again,</p><h2 id="about-heading">I’m <em>Kayiu.</em></h2><p class="about-line">Where data meets<br>stories & possibility.</p><p class="about-description">My academic background brings together data, media communication, computer science and journalism.</p></div>
+ <div class="skill-orbit-card">
+ <article class="study-card study-card-photos"><div class="about-portraits" aria-label="Photos of Kayiu"><img src="about-kayiu-1.jpg" alt="Kayiu taking a mirror photo at a photo booth" loading="lazy"><img src="about-kayiu-2.jpg" alt="Portrait of Kayiu" loading="lazy"></div><p>HKBU</p><h3>Data & Media<br>Communication</h3><p>Concentration (DMC)</p><p class="card-tags">Computer Science · Journalism</p></article>
+ <div class="skill-orbit" role="list" aria-label="My skills">
+ <div class="skill-bubble skill-ai" role="listitem" style="--phase:0%;--delay:0s"><span class="skill-app-icon" aria-hidden="true">Ai</span><span class="skill-name">Illustrator</span></div>
+ <div class="skill-bubble skill-ps" role="listitem" style="--phase:33.333%;--delay:-10s"><span class="skill-app-icon" aria-hidden="true">Ps</span><span class="skill-name">Photoshop</span></div>
+ <div class="skill-bubble skill-python" role="listitem" style="--phase:66.666%;--delay:-20s"><svg class="skill-python-icon" viewBox="0 0 64 64" aria-hidden="true"><path fill="#3776ab" d="M32 5C17 5 18 11 18 11v9h15v3H12S4 22 4 36s8 14 8 14h7v-9s0-8 8-8h14s7 0 7-7V12s1-7-16-7Z"/><circle cx="26" cy="12" r="2.5" fill="white"/><path fill="#ffd343" d="M32 59c15 0 14-6 14-6v-9H31v-3h21s8 1 8-13-8-14-8-14h-1v13s0 9-10 9H27s-5 0-5 6v10s-1 7 10 7Z"/><circle cx="38" cy="52" r="2.5" fill="white"/></svg><span class="skill-name">Python</span></div>
+ </div></div>
+ </div><a class="back-sky" href="#home">Back to the sky ↑</a>
+</section>
+
+  <section class="experience-world" id="experience" aria-labelledby="experience-heading">
+    <div class="chapter-label">02 / A taste of my experience</div>
+    <h2 class="experience-heading" id="experience-heading">Four slices of my experience.</h2>
+    <p class="experience-subtitle">Four sectors, four part-time experiences.<br><span class="cake-caption">Choose a slice to discover what I did.</span></p>
+    <div class="tasting-layout">
+      <div class="cake-stage">
+        <svg class="cake-art" viewBox="0 0 720 570" aria-label="Four complete layered cake slices viewed at approximately 25 degrees">
+<defs>
+<linearGradient id="cut-shade"><stop stop-color="#543a1d" stop-opacity=".18"/><stop offset=".45" stop-color="#fff7e5" stop-opacity="0"/><stop offset="1" stop-color="#664323" stop-opacity=".12"/></linearGradient><radialGradient id="solid-plate"><stop stop-color="#fff"/><stop offset=".8" stop-color="#edf5fa"/><stop offset="1" stop-color="#aec8d8"/></radialGradient>
+<linearGradient id="sponge-side" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e8c895"/><stop offset=".5" stop-color="#f5dfb4"/><stop offset="1" stop-color="#c79c65"/></linearGradient>
+<linearGradient id="server-steel"><stop stop-color="#8999a6"/><stop offset=".4" stop-color="#fff"/><stop offset="1" stop-color="#b0bdc7"/></linearGradient>
+<filter id="crumb-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".35" numOctaves="3" seed="7" result="grain"/><feComposite in="grain" in2="SourceAlpha" operator="in" result="texture"/><feBlend in="SourceGraphic" in2="texture" mode="soft-light"/></filter>
+<clipPath id="solid-top-school"><rect x="80" y="20" width="280" height="225"/></clipPath><clipPath id="solid-top-a1"><rect x="360" y="20" width="280" height="225"/></clipPath><clipPath id="solid-top-xiaomi"><rect x="80" y="245" width="280" height="335"/></clipPath><clipPath id="solid-top-fila"><rect x="360" y="245" width="280" height="335"/></clipPath></defs><image class="porcelain-plate" href="floral-porcelain-plate.png" x="45" y="300" width="630" height="300" preserveAspectRatio="none" pointer-events="none"/>
+<g class="cake-slice" data-taste="school" role="button" tabindex="0" aria-label="Po Leung Kuk Ma Kam Ming College" aria-pressed="false" style="--slice-x:-26px;--slice-y:-48px"><g class="cake-server"><path d="M360 356 L170 322 L124 365 L360 381Z" fill="url(#server-steel)" stroke="#a2b1bc"/><path d="M150 350 L64 303" stroke="#acbac5" stroke-width="13" stroke-linecap="round"/><path d="M85 315 L43 289" stroke="#e8dfd5" stroke-width="20" stroke-linecap="round"/></g><g class="cake-volume" pointer-events="none"><image href="cake-cut-filling.png" x="104" y="245" width="256" height="110" preserveAspectRatio="none"/><path d="M104 245 H360 V355 H104Z" fill="url(#cut-shade)"/></g><g clip-path="url(#solid-top-school)"><image href="experience-cake-25.png" x="80" y="20" width="560" height="560" pointer-events="none"/></g><g class="slice-brand" transform="translate(260 207)" pointer-events="none"><rect x="-82" y="-17" width="164" height="43" rx="9" fill="#fff9edf2" stroke="#c8ac94"/><text x="0" y="0" text-anchor="middle" fill="#5e4856" font-family="Georgia,serif" font-size="14">Po Leung Kuk</text><text x="0" y="16" text-anchor="middle" fill="#5e4856" font-family="Georgia,serif" font-size="14">Ma Kam Ming College</text></g><path class="slice-hit" d="M360 245 L104.00 245.00 A256 108 0 0 1 360.00 137.00Z"/></g><g class="cake-slice" data-taste="a1" role="button" tabindex="0" aria-label="A1 Bakery" aria-pressed="false" style="--slice-x:26px;--slice-y:-48px"><g class="cake-server"><path d="M360 356 L550 322 L596 365 L360 381Z" fill="url(#server-steel)" stroke="#a2b1bc"/><path d="M570 350 L656 303" stroke="#acbac5" stroke-width="13" stroke-linecap="round"/><path d="M635 315 L677 289" stroke="#e8dfd5" stroke-width="20" stroke-linecap="round"/></g><g class="cake-volume" pointer-events="none"><image href="cake-cut-filling.png" x="360" y="245" width="256" height="110" preserveAspectRatio="none"/><path d="M360 245 H616 V355 H360Z" fill="url(#cut-shade)"/></g><g clip-path="url(#solid-top-a1)"><image href="experience-cake-25.png" x="80" y="20" width="560" height="560" pointer-events="none"/></g><g class="slice-brand" transform="translate(461 207)" pointer-events="none"><rect x="-82" y="-17" width="164" height="28" rx="9" fill="#fff9edf2" stroke="#c8ac94"/><text x="0" y="0" text-anchor="middle" fill="#5e4856" font-family="Georgia,serif" font-size="14">A1 Bakery</text></g><path class="slice-hit" d="M360 245 L360.00 137.00 A256 108 0 0 1 616.00 245.00Z"/></g><g class="cake-slice" data-taste="xiaomi" role="button" tabindex="0" aria-label="Xiaomi" aria-pressed="false" style="--slice-x:-26px;--slice-y:-30px"><g class="cake-server"><path d="M360 356 L170 322 L124 365 L360 381Z" fill="url(#server-steel)" stroke="#a2b1bc"/><path d="M150 350 L64 303" stroke="#acbac5" stroke-width="13" stroke-linecap="round"/><path d="M85 315 L43 289" stroke="#e8dfd5" stroke-width="20" stroke-linecap="round"/></g><g class="cake-volume" pointer-events="none"><path d="M360.00 353.00 A256 108 0 0 1 104.00 245.00 L104.00 355.00 A256 108 0 0 0 360.00 463.00Z" fill="url(#sponge-side)"/><path d="M360 245 L360.00 353.00 V463.00 L360 355Z" fill="url(#sponge-side)"/><path d="M360 245 L104.00 245.00 V355.00 L360 355Z" fill="url(#sponge-side)"/><path d="M360.00 372.00 A256 108 0 0 1 104.00 264.00 L104.00 279.00 A256 108 0 0 0 360.00 387.00Z" fill="#fff4dd"/><path d="M360 264 L360.00 372.00 V387.00 L360 279Z" fill="#fff4dd"/><path d="M360 264 L104.00 264.00 V279.00 L360 279Z" fill="#fff4dd"/><path d="M360.00 400.00 A256 108 0 0 1 104.00 292.00 L104.00 305.00 A256 108 0 0 0 360.00 413.00Z" fill="#f0c578"/><path d="M360 292 L360.00 400.00 V413.00 L360 305Z" fill="#f0c578"/><path d="M360 292 L104.00 292.00 V305.00 L360 305Z" fill="#f0c578"/><path d="M360.00 420.00 A256 108 0 0 1 104.00 312.00 L104.00 329.00 A256 108 0 0 0 360.00 437.00Z" fill="#fff9e9"/><path d="M360 312 L360.00 420.00 V437.00 L360 329Z" fill="#fff9e9"/><path d="M360 312 L104.00 312.00 V329.00 L360 329Z" fill="#fff9e9"/><path d="M360.00 451.00 A256 108 0 0 1 104.00 343.00 L104.00 355.00 A256 108 0 0 0 360.00 463.00Z" fill="#c6a071"/><path d="M360 343 L360.00 451.00 V463.00 L360 355Z" fill="#c6a071"/><path d="M360 343 L104.00 343.00 V355.00 L360 355Z" fill="#c6a071"/><path d="M360.00 353.00 A256 108 0 0 1 104.00 245.00 L104.00 355.00 A256 108 0 0 0 360.00 463.00Z" fill="#ead1a0" opacity=".22" filter="url(#crumb-grain)"/><path d="M360.00 353.00 A256 108 0 0 1 104.00 245.00 L104.00 255.00 A256 108 0 0 0 360.00 363.00Z" fill="#f0c578"/></g><g clip-path="url(#solid-top-xiaomi)"><image href="experience-cake-25.png" x="80" y="20" width="560" height="560" pointer-events="none"/></g><g class="slice-brand" transform="translate(260 294)" pointer-events="none"><rect x="-82" y="-17" width="164" height="28" rx="9" fill="#fff9edf2" stroke="#c8ac94"/><text x="0" y="0" text-anchor="middle" fill="#5e4856" font-family="Georgia,serif" font-size="14">Xiaomi</text></g><path class="slice-hit" d="M360 245 L360.00 353.00 A256 108 0 0 1 104.00 245.00Z"/><path class="slice-hit" d="M360.00 353.00 A256 108 0 0 1 104.00 245.00 L104.00 355.00 A256 108 0 0 0 360.00 463.00Z"/></g><g class="cake-slice" data-taste="fila" role="button" tabindex="0" aria-label="FILA" aria-pressed="false" style="--slice-x:26px;--slice-y:-30px"><g class="cake-server"><path d="M360 356 L550 322 L596 365 L360 381Z" fill="url(#server-steel)" stroke="#a2b1bc"/><path d="M570 350 L656 303" stroke="#acbac5" stroke-width="13" stroke-linecap="round"/><path d="M635 315 L677 289" stroke="#e8dfd5" stroke-width="20" stroke-linecap="round"/></g><g class="cake-volume" pointer-events="none"><path d="M616.00 245.00 A256 108 0 0 1 360.00 353.00 L360.00 463.00 A256 108 0 0 0 616.00 355.00Z" fill="url(#sponge-side)"/><path d="M360 245 L616.00 245.00 V355.00 L360 355Z" fill="url(#sponge-side)"/><path d="M360 245 L360.00 353.00 V463.00 L360 355Z" fill="url(#sponge-side)"/><path d="M616.00 264.00 A256 108 0 0 1 360.00 372.00 L360.00 387.00 A256 108 0 0 0 616.00 279.00Z" fill="#fff4dd"/><path d="M360 264 L616.00 264.00 V279.00 L360 279Z" fill="#fff4dd"/><path d="M360 264 L360.00 372.00 V387.00 L360 279Z" fill="#fff4dd"/><path d="M616.00 292.00 A256 108 0 0 1 360.00 400.00 L360.00 413.00 A256 108 0 0 0 616.00 305.00Z" fill="#eab6c5"/><path d="M360 292 L616.00 292.00 V305.00 L360 305Z" fill="#eab6c5"/><path d="M360 292 L360.00 400.00 V413.00 L360 305Z" fill="#eab6c5"/><path d="M616.00 312.00 A256 108 0 0 1 360.00 420.00 L360.00 437.00 A256 108 0 0 0 616.00 329.00Z" fill="#fff9e9"/><path d="M360 312 L616.00 312.00 V329.00 L360 329Z" fill="#fff9e9"/><path d="M360 312 L360.00 420.00 V437.00 L360 329Z" fill="#fff9e9"/><path d="M616.00 343.00 A256 108 0 0 1 360.00 451.00 L360.00 463.00 A256 108 0 0 0 616.00 355.00Z" fill="#c6a071"/><path d="M360 343 L616.00 343.00 V355.00 L360 355Z" fill="#c6a071"/><path d="M360 343 L360.00 451.00 V463.00 L360 355Z" fill="#c6a071"/><path d="M616.00 245.00 A256 108 0 0 1 360.00 353.00 L360.00 463.00 A256 108 0 0 0 616.00 355.00Z" fill="#ead1a0" opacity=".22" filter="url(#crumb-grain)"/><path d="M616.00 245.00 A256 108 0 0 1 360.00 353.00 L360.00 363.00 A256 108 0 0 0 616.00 255.00Z" fill="#eab6c5"/></g><g clip-path="url(#solid-top-fila)"><image href="experience-cake-25.png" x="80" y="20" width="560" height="560" pointer-events="none"/></g><g class="slice-brand" transform="translate(461 294)" pointer-events="none"><rect x="-82" y="-17" width="164" height="28" rx="9" fill="#fff9edf2" stroke="#c8ac94"/><text x="0" y="0" text-anchor="middle" fill="#5e4856" font-family="Georgia,serif" font-size="14">FILA</text></g><path class="slice-hit" d="M360 245 L616.00 245.00 A256 108 0 0 1 360.00 353.00Z"/><path class="slice-hit" d="M616.00 245.00 A256 108 0 0 1 360.00 353.00 L360.00 463.00 A256 108 0 0 0 616.00 355.00Z"/></g></svg>
+        <div class="taste-choices" aria-label="Choose a work experience">
+          <button class="taste-choice" data-taste="a1" aria-pressed="false">01 · A1 Bakery</button>
+          <button class="taste-choice" data-taste="fila" aria-pressed="false">02 · FILA</button>
+          <button class="taste-choice" data-taste="xiaomi" aria-pressed="false">03 · Xiaomi</button>
+          <button class="taste-choice" data-taste="school" aria-pressed="false">04 · IT Support</button>
+        </div>
+      </div>
+      <aside class="experience-menu" aria-label="Work experience menu" hidden>
+        <button class="menu-close" type="button" aria-label="Close work experience">×</button>
+        <p class="menu-eyebrow">The experience pâtisserie</p><h3 class="menu-title"></h3>
+        <div class="menu-divider" aria-hidden="true">✧</div>
+        <div class="menu-body" aria-live="polite" aria-atomic="true">
+          <h4 class="menu-company">Which slice first?</h4><p class="menu-sector">4 sectors · 4 flavours</p>
+          <p class="menu-description">Choose a slice of cake to discover the work behind it.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+    <section class="portfolio-board-section" id="portfolio" aria-labelledby="portfolio-heading">
+      <header class="portfolio-intro"><p class="portfolio-kicker">03 / My creative scrapbook</p><h2 id="portfolio-heading">More <em>about me.</em></h2><p>I am a big K-pop fan and a concert-goer.</p><span class="board-instruction">Pick a photo, discover a story ↗</span></header>
+      <div class="portfolio-board" aria-label="作品相片板">
+        <span class="board-doodle" aria-hidden="true">little things,<br>big feelings ♡</span>
+        <button class="portfolio-photo" data-project="0" style="--tilt:-5deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-1.jpg" alt="燈棒與公仔圍成一圈的追星回憶" loading="lazy" width="1320" height="1456"><span><small>01 / Fan diary</small>A circle of light ↗</span></button>
+        <button class="portfolio-photo" data-project="1" style="--tilt:3deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-2.jpg" alt="帶著應援扇與公仔在偶像海報前留影" loading="lazy" width="1128" height="2000"><span><small>02 / Fan diary</small>I was here ♡</span></button>
+        <button class="portfolio-photo" data-project="2" style="--tilt:-3deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-3.jpg" alt="粉黃甜點風格的小卡、鎖匙扣與徽章應援設計" loading="lazy" width="1310" height="1632"><span><small>03 / Fan-made design</small>A little sweetness ↗</span></button>
+        <button class="portfolio-photo" data-project="3" style="--tilt:4deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-4.jpg" alt="Bin & Hao 藍粉雙色應援卡設計" loading="lazy" width="1320" height="1304"><span><small>04 / Fan-made design</small>K-pop X Animate (Aikatsu) ↗</span></button>
+        <button class="portfolio-photo" data-project="4" style="--tilt:-4deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-5.jpg" alt="毛絨迷你應援扇與貼紙包作品" loading="lazy" width="1305" height="1305"><span><small>05 / Fan-made design</small>hand-made stuff ↗</span></button>
+        <button class="portfolio-photo portfolio-thread" data-project="5" style="--tilt:3deg" aria-haspopup="dialog" aria-controls="portfolio-detail"><img src="portfolio-6.jpg" alt="個人 Threads 貼文截圖，顯示 21.5K 次瀏覽" loading="lazy" width="920" height="2000"><span><small>06 / Stories on Threads</small>My voice, my values ↗</span><b class="board-sticker">21.5K<br><small>views*</small></b></button>
+      </div>
+      <footer class="portfolio-signoff"><span>With a passion for creation, with sincerity in recording.</span></footer>
+    </section>
+  </main>
+  <dialog id="portfolio-detail" class="portfolio-detail" aria-labelledby="portfolio-detail-title">
+    <button type="button" class="portfolio-detail-close" aria-label="關閉作品介紹" autofocus>×</button>
+    <div class="portfolio-detail-layout"><div class="portfolio-detail-image"><img src="portfolio-1.jpg" alt=""></div><article class="portfolio-detail-copy"><p class="portfolio-kicker" id="portfolio-detail-category"></p><h2 id="portfolio-detail-title"></h2><p id="portfolio-detail-description"></p><div id="portfolio-detail-note"></div><p class="portfolio-detail-signature">From Kayiu’s scrapbook ♡</p></article></div>
+  </dialog>
+
+
+  <dialog class="education-dialog" id="education-dialog" aria-labelledby="education-title">
+    <article class="scroll-sheet">
+      <div class="certificate-border" aria-hidden="true"></div>
+      <button class="education-close" type="button" aria-label="Close education" autofocus>×</button>
+      <p class="education-kicker">Kayiu · Academic Journey</p>
+      <h2 class="education-title" id="education-title">My Education</h2>
+      <p class="education-school">HKBU</p>
+      <p class="education-program">Data and Media Communication Concentration (DMC)</p>
+      <p class="education-detail">An Interdisciplinary Concentration for HKBU Computer Science and Journalism</p>
+      <div class="education-seal" aria-hidden="true">✧</div>
+    </article>
+    <div class="sparkles" aria-hidden="true"><span>✦</span><span>✧</span><span>✦</span><span>✧</span><span>✦</span><span>✧</span></div>
+  </dialog>
+<dialog class="education-dialog more-dialog" id="more-dialog" aria-labelledby="more-title"><article class="scroll-sheet"><button class="education-close more-close" type="button" aria-label="Close More About Me" autofocus>×</button><h2 class="education-title" id="more-title">More About Me</h2><dl class="fairy-contact"><dt>Gmail</dt><dd><a href="mailto:haoyiu513@gmail.com">haoyiu513@gmail.com</a></dd><dt>Phone</dt><dd><a href="tel:+85254670828">+852 5467 0828</a></dd></dl></article></dialog><script>
+
+    const heroVideo = document.querySelector('.hero-video');
+    const SENSITIVITY = 0.8;
+    // The 5258 clip uses the opposite gaze sequence to the previous clip.
+    // Map left to earlier frames and right to later frames.
+    const DIRECTION = 1;
+    let pointerRatio = 0.5;
+    let targetTime = null;
+    let seekPending = false;
+
+    // Keep the video paused: mouse movement changes its frame, never playback.
+    heroVideo.muted = true;
+    heroVideo.pause();
+    heroVideo.addEventListener('play', () => heroVideo.pause());
+
+    function initializeVideo() {
+      seekPending = false;
+      updateTarget();
+    }
+    heroVideo.addEventListener('loadedmetadata', initializeVideo);
+    if (heroVideo.readyState >= 1) initializeVideo();
+
+    function seekToTarget() {
+      if (seekPending || heroVideo.seeking || !Number.isFinite(heroVideo.duration) || targetTime === null) return;
+      if (Math.abs(heroVideo.currentTime - targetTime) < 0.01) {
+        seekPending = false;
+        return;
+      }
+      seekPending = true;
+      heroVideo.currentTime = targetTime;
+    }
+
+    heroVideo.addEventListener('seeked', () => {
+      seekPending = false;
+      if (targetTime !== null && Math.abs(heroVideo.currentTime - targetTime) >= 0.01) seekToTarget();
+    });
+
+    function updateTarget() {
+      const duration = heroVideo.duration;
+      if (!Number.isFinite(duration) || duration <= 0) return;
+      // Absolute position keeps each screen location tied to the same frame.
+      targetTime = Math.max(0, Math.min(duration,
+        (0.5 + (pointerRatio - 0.5) * SENSITIVITY * DIRECTION) * duration));
+      if (!seekPending) seekToTarget();
+    }
+    window.addEventListener('mousemove', event => {
+      pointerRatio = Math.max(0, Math.min(1, event.clientX / window.innerWidth));
+      updateTarget();
+    });
+
+
+    const welcome = document.querySelector('.welcome');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    document.documentElement.classList.add('motion-ready');
+    // Reveal automatically; video playback remains paused and mouse-controlled.
+    window.setTimeout(() => {
+      welcome.classList.add('is-visible');
+    }, reducedMotion.matches ? 0 : 450);
+    const educationDialog = document.querySelector('#education-dialog');
+    const fairyButton = document.querySelector('.fairy-button');
+    function positionEducation() {
+      const bottom = Math.max(14, fairyButton.getBoundingClientRect().bottom);
+      educationDialog.style.setProperty('--education-top', `${Math.round(bottom + 10)}px`);
+    }
+    window.addEventListener('resize', positionEducation);
+    // Freeze the current animation frame before the cursor reaches the fairy.
+    window.addEventListener('mousemove', event => {
+      if (educationDialog.open) return;
+      const r = fairyButton.getBoundingClientRect();
+      const nearby = event.clientX >= r.left - 45 && event.clientX <= r.right + 45
+        && event.clientY >= r.top - 45 && event.clientY <= r.bottom + 45;
+      fairyButton.classList.toggle('is-near', nearby);
+    }, { passive: true });
+    document.documentElement.addEventListener('mouseleave', () => fairyButton.classList.remove('is-near'));
+    let closeTimer;
+    fairyButton.addEventListener('click', () => {
+      clearTimeout(closeTimer);
+      educationDialog.classList.remove('is-closing');
+      fairyButton.setAttribute('aria-expanded', 'true');
+      positionEducation();
+      educationDialog.showModal();
+    });
+    function closeEducation() {
+      if (!educationDialog.open || educationDialog.classList.contains('is-closing')) return;
+      educationDialog.classList.add('is-closing');
+      closeTimer = window.setTimeout(() => educationDialog.close(), reducedMotion.matches ? 0 : 280);
+    }
+    document.querySelector('.education-close').addEventListener('click', closeEducation);
+    educationDialog.addEventListener('cancel', event => { event.preventDefault(); closeEducation(); });
+    educationDialog.addEventListener('click', event => {
+      const bounds = educationDialog.getBoundingClientRect();
+      if (event.target === educationDialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) closeEducation();
+    });
+    educationDialog.addEventListener('close', () => {
+      clearTimeout(closeTimer);
+      educationDialog.classList.remove('is-closing');
+      fairyButton.setAttribute('aria-expanded', 'false');
+      if (fairyButton.getBoundingClientRect().bottom > 0) fairyButton.focus({preventScroll:true});
+    });
+
+const moreFairy=document.querySelector('.more-fairy'), moreDialog=document.querySelector('#more-dialog');
+moreFairy.addEventListener('click',()=>{ moreFairy.setAttribute('aria-expanded','true'); moreDialog.style.setProperty('--education-top',`${Math.max(14,moreFairy.getBoundingClientRect().bottom)+10}px`); moreDialog.showModal(); });
+document.querySelector('.more-close').addEventListener('click',()=>moreDialog.close());
+moreDialog.addEventListener('close',()=>{moreFairy.setAttribute('aria-expanded','false');moreFairy.focus({preventScroll:true});});
+moreDialog.addEventListener('click',e=>{const r=moreDialog.getBoundingClientRect();if(e.target===moreDialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))moreDialog.close();});
+const journey=document.querySelector('.portrait-story');let scrollFrame=0;
+function updateJourney(){scrollFrame=0;const progress=Math.max(0,Math.min(1,-journey.getBoundingClientRect().top/Math.max(1,journey.offsetHeight-window.innerHeight)));journey.style.setProperty('--journey-fade',progress*.9);journey.style.setProperty('--title-opacity',1-progress*.9);}
+window.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(updateJourney);},{passive:true});window.addEventListener('resize',updateJourney);updateJourney();
+
+    const tasteExperiences = {
+      a1: { company: 'A1 Bakery', sector: 'Food & F&B', description: 'Customer service & retail operations, food-service environment', position: 'top-left' },
+      fila: { company: 'FILA', sector: 'Fashion & Retail', description: 'Retail sales, customer interaction and merchandise handling', position: 'bottom-left' },
+      xiaomi: { company: 'Xiaomi', sector: 'Consumer electronics', description: 'In-store customer support and product demonstration', position: 'bottom-right' },
+      school: { company: 'Po Leung Kuk Ma Kam Ming College', sector: 'Education', role: 'IT Assistant', description: 'Provided technical support for school IT facilities, assisted with daily IT administrative tasks.', position: 'top-right' }
+    };
+    const experienceMenu = document.querySelector('.experience-menu');
+    const menuBody = document.querySelector('.menu-body');
+    const tasteControls = document.querySelectorAll('[data-taste]');
+    let selectedTaste = null;
+    let tasteOpener;
+    function selectTaste(key, opener) {
+      if (!tasteExperiences[key]) return;
+      selectedTaste = key;
+      tasteOpener = opener;
+      const item = tasteExperiences[key];
+      document.querySelectorAll('.cake-slice').forEach(slice => slice.classList.toggle('is-selected', slice.dataset.taste === key));
+      const selectedSlice = document.querySelector(`.cake-slice[data-taste="${key}"]`);
+      selectedSlice.parentNode.appendChild(selectedSlice);
+      tasteControls.forEach(control => control.setAttribute('aria-pressed', String(control.dataset.taste === key)));
+      menuBody.querySelector('.menu-company').textContent = item.company;
+      experienceMenu.querySelector('.menu-title').textContent = item.sector.toUpperCase();
+      menuBody.querySelector('.menu-sector').textContent = item.role || '';
+      menuBody.querySelector('.menu-sector').hidden = !item.role;
+      menuBody.querySelector('.menu-description').textContent = item.description;
+      experienceMenu.dataset.position = item.position;
+      experienceMenu.hidden = false;
+      experienceMenu.classList.remove('is-revealing');
+      void experienceMenu.getBoundingClientRect();
+      experienceMenu.classList.add('is-revealing');
+    }
+    function closeTaste() {
+      experienceMenu.hidden = true;
+      selectedTaste = null;
+      ['school','a1','xiaomi','fila'].forEach(key => { const slice = document.querySelector(`.cake-slice[data-taste="${key}"]`); slice.parentNode.appendChild(slice); });
+      document.querySelectorAll('.cake-slice').forEach(slice => slice.classList.remove('is-selected'));
+      tasteControls.forEach(control => control.setAttribute('aria-pressed', 'false'));
+      if (tasteOpener) tasteOpener.focus({ preventScroll: true });
+    }
+    tasteControls.forEach(control => {
+      control.addEventListener('click', () => selectTaste(control.dataset.taste, control));
+      if (control.classList.contains('cake-slice')) control.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectTaste(control.dataset.taste, control); }
+      });
+    });
+    document.querySelector('.menu-close').addEventListener('click', closeTaste);
+    document.querySelector('.experience-world').addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !experienceMenu.hidden) { event.preventDefault(); closeTaste(); }
+    });
+  </script>
+  <canvas id="glitter-transition" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8"></canvas>
+  <script src="glitter-transition.js"></script>
+</body>
+</html>
